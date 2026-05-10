@@ -107,7 +107,65 @@
         direction: ltr;
       }
 
-      /* LANG TOGGLE */
+      /* FLOATING LANG TOGGLE */
+      .lang-nav-mobile {
+        display: none;
+      }
+      .lang-float {
+        position: fixed;
+        top: 32px;
+        right: 32px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0;
+        background: rgba(13, 14, 17, 0.85);
+        border: 1px solid var(--line-2);
+        border-radius: 100px;
+        padding: 6px;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.04);
+        transition: box-shadow 0.3s;
+      }
+      html[lang="ar"] .lang-float {
+        right: auto;
+        left: 32px;
+        top: 32px;
+      }
+      .lang-float:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0,255,136,0.15);
+      }
+      .lang-float-btn {
+        padding: 8px 12px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--fg-muted);
+        cursor: pointer;
+        transition: all 0.25s var(--ease-out);
+        font-family: var(--mono);
+        white-space: nowrap;
+        letter-spacing: 0.04em;
+        line-height: 1;
+      }
+      .lang-float-btn:hover {
+        color: var(--fg);
+      }
+      .lang-float-btn.active {
+        background: var(--accent);
+        color: var(--bg);
+        box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+      }
+      .lang-float-divider {
+        width: 1px;
+        height: 16px;
+        background: var(--line-2);
+        margin: 0 2px;
+      }
+
+      /* OLD lang-toggle kept for reference — now unused */
       .lang-toggle {
         display: flex;
         align-items: center;
@@ -1862,6 +1920,28 @@
           padding: 3px 7px;
           font-size: 10px;
         }
+        .lang-float {
+          display: none !important;
+        }
+        .lang-nav-mobile {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid var(--line-2);
+          border-radius: 100px;
+          padding: 3px;
+          margin-left: 6px;
+          flex-shrink: 0;
+        }
+        html[lang="ar"] .lang-nav-mobile {
+          margin-left: 0;
+          margin-right: 6px;
+        }
+        .lang-float-btn {
+          padding: 4px 8px;
+          font-size: 10px;
+        }
 
         .hero {
           padding: 90px 20px 40px;
@@ -1950,6 +2030,48 @@
           cursor: pointer;
         }
       }
+
+      @media (max-width: 700px) {
+        html[lang="ar"] .lang-float {
+          top: auto !important;
+          bottom: 20px !important;
+          right: auto !important;
+          left: 16px !important;
+        }
+        html[lang="ar"] nav {
+          padding: 6px 14px 6px 6px;
+        }
+        html[lang="ar"] .nav-logo {
+          margin-right: 0;
+          margin-left: 8px;
+        }
+        html[lang="ar"] .hero-inner {
+          direction: rtl;
+        }
+        html[lang="ar"] .hero-badge {
+          direction: rtl;
+        }
+        html[lang="ar"] .hero-actions {
+          justify-content: flex-start;
+        }
+        html[lang="ar"] .footer-inner {
+          direction: rtl;
+          text-align: center;
+        }
+        html[lang="ar"] .exp-item {
+          direction: rtl;
+        }
+        html[lang="ar"] .about-card {
+          direction: rtl;
+        }
+        html[lang="ar"] .works-tabs {
+          justify-content: flex-end;
+        }
+        html[lang="ar"] .contact-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1985,11 +2107,19 @@
         data-ar="تواصل معي ←"
         >Let's talk →</a
       >
-      <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="ar">ع</button>
+      <div class="lang-nav-mobile">
+        <button class="lang-float-btn active" data-lang="en">EN</button>
+        <div class="lang-float-divider"></div>
+        <button class="lang-float-btn" data-lang="ar">ع</button>
       </div>
     </nav>
+
+    <!-- FLOATING LANG TOGGLE -->
+    <div class="lang-float">
+      <button class="lang-float-btn active" data-lang="en">EN</button>
+      <div class="lang-float-divider"></div>
+      <button class="lang-float-btn" data-lang="ar">ع</button>
+    </div>
 
     <!-- HERO -->
     <section class="hero" id="hero">
@@ -2861,7 +2991,7 @@
       }
 
       // LANGUAGE TOGGLE
-      const langBtns = document.querySelectorAll(".lang-btn");
+      const langBtns = document.querySelectorAll(".lang-float-btn");
       const htmlEl = document.documentElement;
 
       function applyLang(lang) {
