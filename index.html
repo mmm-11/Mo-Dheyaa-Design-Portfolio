@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Cairo:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -35,9 +35,92 @@
         --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
+      :root {
+        --arabic: "Cairo", sans-serif;
+      }
+
       html {
         scroll-behavior: smooth;
         background: var(--bg);
+      }
+
+      html[lang="ar"] body {
+        font-family: var(--arabic);
+        letter-spacing: 0;
+        direction: rtl;
+      }
+      html[lang="ar"] .nav-logo {
+        margin-right: 0;
+        margin-left: 16px;
+      }
+      html[lang="ar"] nav {
+        padding: 8px 20px 8px 8px;
+      }
+      html[lang="ar"] .nav-cta {
+        margin-left: 0;
+        margin-right: 8px;
+      }
+      html[lang="ar"] .exp-arrow {
+        transform: rotate(180deg);
+      }
+      html[lang="ar"] .exp-item:hover .exp-arrow {
+        transform: rotate(180deg) rotate(-45deg);
+      }
+      html[lang="ar"] .work-arrow {
+        transform: rotate(180deg);
+      }
+      html[lang="ar"] .work-card:hover .work-arrow {
+        transform: rotate(180deg) rotate(-45deg);
+      }
+      html[lang="ar"] .btn-primary .arrow {
+        display: inline-block;
+        transform: rotate(180deg);
+      }
+      html[lang="ar"] .hero-title,
+      html[lang="ar"] .section-title,
+      html[lang="ar"] .contact-title {
+        letter-spacing: 0;
+      }
+      html[lang="ar"] .footer-inner {
+        direction: rtl;
+      }
+      html[lang="ar"] .hero-badge {
+        direction: rtl;
+      }
+      html[lang="ar"] .nav-logo {
+        direction: ltr;
+      }
+
+      /* LANG TOGGLE */
+      .lang-toggle {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line-2);
+        border-radius: 100px;
+        padding: 4px;
+        margin-left: 8px;
+        flex-shrink: 0;
+      }
+      html[lang="ar"] .lang-toggle {
+        margin-left: 0;
+        margin-right: 8px;
+      }
+      .lang-btn {
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--fg-muted);
+        cursor: pointer;
+        transition: all 0.25s;
+        font-family: var(--mono);
+        white-space: nowrap;
+      }
+      .lang-btn.active {
+        background: var(--accent);
+        color: var(--bg);
       }
 
       body {
@@ -1587,6 +1670,13 @@
           font-size: 12px;
           white-space: nowrap;
         }
+        .lang-toggle {
+          margin-left: 4px;
+        }
+        .lang-btn {
+          padding: 3px 7px;
+          font-size: 10px;
+        }
 
         .hero {
           padding: 110px 20px 40px;
@@ -1678,15 +1768,31 @@
     <nav>
       <div class="nav-logo">
         <span class="nav-logo-dot"></span>
-        <span>Mohammed.Dheyaa</span>
+        <span data-en="Mohammed.Dheyaa" data-ar="محمد.ضياء"
+          >Mohammed.Dheyaa</span
+        >
       </div>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#works">Works</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
+        <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
+        <li><a href="#works" data-en="Works" data-ar="أعمالي">Works</a></li>
+        <li>
+          <a href="#experience" data-en="Experience" data-ar="خبرتي"
+            >Experience</a
+          >
+        </li>
+        <li><a href="#skills" data-en="Skills" data-ar="مهاراتي">Skills</a></li>
       </ul>
-      <a href="#contact" class="nav-cta">Let's talk →</a>
+      <a
+        href="#contact"
+        class="nav-cta"
+        data-en="Let's talk →"
+        data-ar="تواصل معي ←"
+        >Let's talk →</a
+      >
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">ع</button>
+      </div>
     </nav>
 
     <!-- HERO -->
@@ -1695,31 +1801,47 @@
         <div>
           <div class="hero-badge">
             <span class="hero-badge-dot"></span>
-            <span>Available for work</span>
+            <span data-en="Available for work" data-ar="متاح للعمل"
+              >Available for work</span
+            >
           </div>
 
           <h1 class="hero-title">
             <span class="row"
-              ><span class="reveal-text">Mohammed Dheyaa.</span></span
+              ><span
+                class="reveal-text"
+                data-en="Mohammed Dheyaa."
+                data-ar="محمد ضياء."
+                >Mohammed Dheyaa.</span
+              ></span
             >
             <span class="row"
               ><span class="reveal-text"
-                ><span class="gradient-text">UI/UX Designer.</span></span
+                ><span
+                  class="gradient-text"
+                  data-en="UI/UX Designer."
+                  data-ar="مصمم UI/UX."
+                  >UI/UX Designer.</span
+                ></span
               ></span
             >
           </h1>
 
-          <p class="hero-sub">
+          <p
+            class="hero-sub"
+            data-en="7+ years designing digital products in Figma & Framer."
+            data-ar="أكثر من 7 سنوات في تصميم المنتجات الرقمية بـ Figma و Framer."
+          >
             7+ years designing digital products in Figma & Framer.
           </p>
 
           <div class="hero-actions">
             <a href="#works" class="btn btn-primary">
-              <span>View work</span>
+              <span data-en="View work" data-ar="استعرض أعمالي">View work</span>
               <span class="arrow">→</span>
             </a>
             <a href="#contact" class="btn btn-secondary">
-              <span>Contact</span>
+              <span data-en="Contact" data-ar="تواصل">Contact</span>
             </a>
           </div>
         </div>
@@ -1731,13 +1853,17 @@
             style="object-fit: cover"
           />
           <div class="hero-card hero-card-1">
-            <div class="label">Based in</div>
+            <div class="label" data-en="Based in" data-ar="يقيم في">
+              Based in
+            </div>
             <div class="value">Baghdad, IQ</div>
           </div>
 
           <div class="hero-card hero-card-2">
             <span class="ring"></span>
-            <span class="text">Available</span>
+            <span class="text" data-en="Available" data-ar="متاح"
+              >Available</span
+            >
           </div>
         </div>
       </div>
@@ -1747,28 +1873,34 @@
     <section id="about">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-tag">About</div>
+          <div class="section-tag" data-en="About" data-ar="عني">About</div>
           <h2 class="section-title">
-            A senior designer <em>building products that work.</em>
+            <span data-en="A senior designer " data-ar="مصمم أول "
+              >A senior designer </span
+            ><em
+              data-en="building products that work."
+              data-ar="يبني منتجات تُحدث فرقاً."
+              >building products that work.</em
+            >
           </h2>
         </div>
 
         <div class="about-stats reveal-stagger">
           <div class="about-card">
             <div class="num">07<span>+</span></div>
-            <div class="lab">Years</div>
+            <div class="lab" data-en="Years" data-ar="سنة">Years</div>
           </div>
           <div class="about-card">
             <div class="num">50<span>+</span></div>
-            <div class="lab">Projects</div>
+            <div class="lab" data-en="Projects" data-ar="مشروع">Projects</div>
           </div>
           <div class="about-card">
             <div class="num">04</div>
-            <div class="lab">Companies</div>
+            <div class="lab" data-en="Companies" data-ar="شركة">Companies</div>
           </div>
           <div class="about-card">
             <div class="num">∞</div>
-            <div class="lab">Frames</div>
+            <div class="lab" data-en="Frames" data-ar="إطار">Frames</div>
           </div>
         </div>
       </div>
@@ -1778,23 +1910,46 @@
     <section id="works">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-tag">Works</div>
-          <h2 class="section-title">Selected <em>projects.</em></h2>
+          <div class="section-tag" data-en="Works" data-ar="أعمالي">Works</div>
+          <h2 class="section-title">
+            <span data-en="Selected " data-ar="مشاريع ">Selected </span
+            ><em data-en="projects." data-ar="مختارة.">projects.</em>
+          </h2>
         </div>
 
         <!-- TABS -->
         <div class="works-tabs reveal" role="tablist">
           <div class="tab-bg" id="tab-bg"></div>
-          <button class="tab-btn active" data-filter="all">
+          <button
+            class="tab-btn active"
+            data-filter="all"
+            data-en="All"
+            data-ar="الكل"
+          >
             All <span class="count">07</span>
           </button>
-          <button class="tab-btn" data-filter="website">
+          <button
+            class="tab-btn"
+            data-filter="website"
+            data-en="Website"
+            data-ar="مواقع"
+          >
             Website <span class="count">3</span>
           </button>
-          <button class="tab-btn" data-filter="uiux">
+          <button
+            class="tab-btn"
+            data-filter="uiux"
+            data-en="UI/UX"
+            data-ar="UI/UX"
+          >
             UI/UX <span class="count">3</span>
           </button>
-          <button class="tab-btn" data-filter="graphic">
+          <button
+            class="tab-btn"
+            data-filter="graphic"
+            data-en="Graphic Design"
+            data-ar="جرافيك"
+          >
             Graphic Design <span class="count">1</span>
           </button>
         </div>
@@ -1816,7 +1971,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Flame Website</div>
+                <div
+                  class="work-name"
+                  data-en="Flame Website"
+                  data-ar="موقع Flame"
+                >
+                  Flame Website
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Website</span>
                   <span class="work-mini-tag">2026</span>
@@ -1844,7 +2005,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Karrar Website</div>
+                <div
+                  class="work-name"
+                  data-en="Karrar Website"
+                  data-ar="موقع كرار"
+                >
+                  Karrar Website
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Website</span>
                   <span class="work-mini-tag">2026</span>
@@ -1870,7 +2037,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Dr Cube Website</div>
+                <div
+                  class="work-name"
+                  data-en="Dr Cube Website"
+                  data-ar="موقع دكتور كيوب"
+                >
+                  Dr Cube Website
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Ui/Ux</span>
                   <span class="work-mini-tag">2023</span>
@@ -1892,7 +2065,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Ameena Website</div>
+                <div
+                  class="work-name"
+                  data-en="Ameena Website"
+                  data-ar="موقع أمينة"
+                >
+                  Ameena Website
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Framer</span>
                   <span class="work-mini-tag">2025</span>
@@ -1917,7 +2096,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Hajar Identity</div>
+                <div
+                  class="work-name"
+                  data-en="Hajar Identity"
+                  data-ar="هوية هجار"
+                >
+                  Hajar Identity
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Graphic Design</span>
                   <span class="work-mini-tag">2026</span>
@@ -1940,7 +2125,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Food Mobile App</div>
+                <div
+                  class="work-name"
+                  data-en="Food Mobile App"
+                  data-ar="تطبيق الطعام"
+                >
+                  Food Mobile App
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Ui/Ux</span>
                   <span class="work-mini-tag">2023</span>
@@ -1966,7 +2157,13 @@
             </div>
             <div class="work-info">
               <div class="work-info-left">
-                <div class="work-name">Travel Agency Sign-in</div>
+                <div
+                  class="work-name"
+                  data-en="Travel Agency Sign-in"
+                  data-ar="تسجيل دخول وكالة سفر"
+                >
+                  Travel Agency Sign-in
+                </div>
                 <div class="work-tags">
                   <span class="work-mini-tag accent">Ui/Ux</span>
                   <span class="work-mini-tag">2024</span>
@@ -1983,18 +2180,38 @@
     <section id="experience">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-tag">Experience</div>
-          <h2 class="section-title">Where I've <em>worked.</em></h2>
+          <div class="section-tag" data-en="Experience" data-ar="الخبرة">
+            Experience
+          </div>
+          <h2 class="section-title">
+            <span data-en="Where I've " data-ar="أماكن ">Where I've </span
+            ><em data-en="worked." data-ar="عملت فيها.">worked.</em>
+          </h2>
         </div>
 
         <div class="exp-list reveal-stagger">
           <div class="exp-item">
             <div class="exp-period">
-              2024 — Now <span class="now">Current</span>
+              2024 — Now
+              <span class="now" data-en="Current" data-ar="حالياً"
+                >Current</span
+              >
             </div>
             <div>
-              <div class="exp-role">Product Specialist</div>
-              <div class="exp-company">Abwaab Educational Platform</div>
+              <div
+                class="exp-role"
+                data-en="Product Specialist"
+                data-ar="متخصص منتج"
+              >
+                Product Specialist
+              </div>
+              <div
+                class="exp-company"
+                data-en="Abwaab Educational Platform"
+                data-ar="منصة أبواب التعليمية"
+              >
+                Abwaab Educational Platform
+              </div>
             </div>
             <div class="exp-arrow">→</div>
           </div>
@@ -2002,7 +2219,13 @@
           <div class="exp-item">
             <div class="exp-period">2023 — 2024</div>
             <div>
-              <div class="exp-role">Business Analyst · UI/UX Designer</div>
+              <div
+                class="exp-role"
+                data-en="Business Analyst · UI/UX Designer"
+                data-ar="محلل أعمال · مصمم UI/UX"
+              >
+                Business Analyst · UI/UX Designer
+              </div>
               <div class="exp-company">Earthlink Telecommunication</div>
             </div>
             <div class="exp-arrow">→</div>
@@ -2011,7 +2234,13 @@
           <div class="exp-item">
             <div class="exp-period">2022 — 2023</div>
             <div>
-              <div class="exp-role">Solution Sales Account Manager</div>
+              <div
+                class="exp-role"
+                data-en="Solution Sales Account Manager"
+                data-ar="مدير حسابات مبيعات الحلول"
+              >
+                Solution Sales Account Manager
+              </div>
               <div class="exp-company">Earthlink Telecommunication</div>
             </div>
             <div class="exp-arrow">→</div>
@@ -2020,7 +2249,13 @@
           <div class="exp-item">
             <div class="exp-period">2021 — 2022</div>
             <div>
-              <div class="exp-role">Digital Marketing · Graphic Designer</div>
+              <div
+                class="exp-role"
+                data-en="Digital Marketing · Graphic Designer"
+                data-ar="تسويق رقمي · مصمم جرافيك"
+              >
+                Digital Marketing · Graphic Designer
+              </div>
               <div class="exp-company">Keyston Distribution</div>
             </div>
             <div class="exp-arrow">→</div>
@@ -2029,7 +2264,13 @@
           <div class="exp-item">
             <div class="exp-period">2021</div>
             <div>
-              <div class="exp-role">Front End Developer</div>
+              <div
+                class="exp-role"
+                data-en="Front End Developer"
+                data-ar="مطور واجهات أمامية"
+              >
+                Front End Developer
+              </div>
               <div class="exp-company">Capo Co</div>
             </div>
             <div class="exp-arrow">→</div>
@@ -2042,15 +2283,28 @@
     <section id="skills">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-tag">Skills</div>
-          <h2 class="section-title">Tools I <em>use daily.</em></h2>
+          <div class="section-tag" data-en="Skills" data-ar="المهارات">
+            Skills
+          </div>
+          <h2 class="section-title">
+            <span data-en="Tools I " data-ar="الأدوات التي ">Tools I </span
+            ><em data-en="use daily." data-ar="أستخدمها يومياً.">use daily.</em>
+          </h2>
         </div>
 
         <div class="skills-grid reveal-stagger">
           <div class="skill-card featured" style="--w: 98%">
             <div class="skill-head">
-              <div class="skill-name">UI/UX Design</div>
-              <div class="skill-level">Senior</div>
+              <div
+                class="skill-name"
+                data-en="UI/UX Design"
+                data-ar="تصميم UI/UX"
+              >
+                UI/UX Design
+              </div>
+              <div class="skill-level" data-en="Senior" data-ar="متقدم">
+                Senior
+              </div>
             </div>
             <div class="skill-bar"><div class="skill-fill"></div></div>
           </div>
@@ -2058,7 +2312,9 @@
           <div class="skill-card featured" style="--w: 96%">
             <div class="skill-head">
               <div class="skill-name">Figma</div>
-              <div class="skill-level">Expert</div>
+              <div class="skill-level" data-en="Expert" data-ar="خبير">
+                Expert
+              </div>
             </div>
             <div class="skill-bar"><div class="skill-fill"></div></div>
           </div>
@@ -2066,31 +2322,47 @@
           <div class="skill-card featured" style="--w: 92%">
             <div class="skill-head">
               <div class="skill-name">Framer</div>
-              <div class="skill-level">Advanced</div>
+              <div class="skill-level" data-en="Advanced" data-ar="متقدم">
+                Advanced
+              </div>
             </div>
             <div class="skill-bar"><div class="skill-fill"></div></div>
           </div>
 
           <div class="skill-card" style="--w: 90%">
             <div class="skill-head">
-              <div class="skill-name">Graphic Design</div>
-              <div class="skill-level">Strong</div>
+              <div
+                class="skill-name"
+                data-en="Graphic Design"
+                data-ar="تصميم جرافيك"
+              >
+                Graphic Design
+              </div>
+              <div class="skill-level" data-en="Strong" data-ar="قوي">
+                Strong
+              </div>
             </div>
             <div class="skill-bar"><div class="skill-fill"></div></div>
           </div>
 
           <div class="skill-card" style="--w: 88%">
             <div class="skill-head">
-              <div class="skill-name">AI Tools</div>
-              <div class="skill-level">Fluent</div>
+              <div class="skill-name" data-en="AI Tools" data-ar="أدوات AI">
+                AI Tools
+              </div>
+              <div class="skill-level" data-en="Fluent" data-ar="محترف">
+                Fluent
+              </div>
             </div>
             <div class="skill-bar"><div class="skill-fill"></div></div>
           </div>
 
           <div class="skill-card" style="--w: 85%">
             <div class="skill-head">
-              <div class="skill-name">Web Dev</div>
-              <div class="skill-level">Solid</div>
+              <div class="skill-name" data-en="Web Dev" data-ar="تطوير ويب">
+                Web Dev
+              </div>
+              <div class="skill-level" data-en="Solid" data-ar="جيد">Solid</div>
             </div>
             <div class="skill-bar"><div class="skill-fill"></div></div>
           </div>
@@ -2102,7 +2374,6 @@
           <span class="tool-pill">Photoshop</span>
           <span class="tool-pill">Illustrator</span>
           <span class="tool-pill">HTML / CSS</span>
-          <span class="tool-pill">React</span>
           <span class="tool-pill">Claude</span>
         </div>
       </div>
@@ -2112,8 +2383,13 @@
     <section id="contact">
       <div class="container">
         <div class="contact-card reveal">
-          <div class="contact-eyebrow">Contact</div>
-          <h2 class="contact-title">Let's <em>work together.</em></h2>
+          <div class="contact-eyebrow" data-en="Contact" data-ar="تواصل معي">
+            Contact
+          </div>
+          <h2 class="contact-title">
+            <span data-en="Let's " data-ar="لنعمل ">Let's </span
+            ><em data-en="work together." data-ar="معاً.">work together.</em>
+          </h2>
           <div class="contact-actions">
             <a href="mailto:mo.dheyaa11@gmail.com" class="btn btn-primary">
               <span>mo.dheyaa11@gmail.com</span>
@@ -2130,14 +2406,22 @@
     <!-- FOOTER -->
     <footer>
       <div class="footer-inner">
-        <div class="footer-brand">Mohammed Dheyaa</div>
+        <div class="footer-brand" data-en="Mohammed Dheyaa" data-ar="محمد ضياء">
+          Mohammed Dheyaa
+        </div>
         <div class="footer-socials">
           <a href="#" class="social-pill">LinkedIn</a>
           <a href="#" class="social-pill">Behance</a>
           <a href="#" class="social-pill">Dribbble</a>
           <a href="#" class="social-pill">Instagram</a>
         </div>
-        <div class="footer-copy">© 2026 — Baghdad</div>
+        <div
+          class="footer-copy"
+          data-en="© 2026 — Baghdad"
+          data-ar="© 2026 — بغداد"
+        >
+          © 2026 — Baghdad
+        </div>
       </div>
     </footer>
 
@@ -2227,7 +2511,44 @@
         });
       }
 
-      // TABS — animated indicator + filter
+      // LANGUAGE TOGGLE
+      const langBtns = document.querySelectorAll(".lang-btn");
+      const htmlEl = document.documentElement;
+
+      function applyLang(lang) {
+        htmlEl.setAttribute("lang", lang);
+        htmlEl.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+        langBtns.forEach((b) =>
+          b.classList.toggle("active", b.dataset.lang === lang),
+        );
+
+        // Update all elements with data-en / data-ar
+        document.querySelectorAll("[data-en]").forEach((el) => {
+          el.textContent =
+            el.getAttribute("data-" + lang) || el.getAttribute("data-en");
+        });
+
+        // Tab buttons: preserve count spans
+        document.querySelectorAll(".tab-btn[data-en]").forEach((btn) => {
+          const count = btn.querySelector(".count");
+          const label =
+            btn.getAttribute("data-" + lang) || btn.getAttribute("data-en");
+          btn.childNodes.forEach((n) => {
+            if (n.nodeType === 3) n.textContent = label + " ";
+          });
+        });
+
+        localStorage.setItem("lang", lang);
+      }
+
+      langBtns.forEach((btn) => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+
+      // Init: check saved pref, default to 'en'
+      const savedLang = localStorage.getItem("lang") || "en";
+      applyLang(savedLang);
       const tabBtns = document.querySelectorAll(".tab-btn");
       const tabBg = document.getElementById("tab-bg");
       const workCards = document.querySelectorAll("#works-grid .work-card");
