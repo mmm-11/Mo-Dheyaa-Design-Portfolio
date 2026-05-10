@@ -160,32 +160,7 @@
         opacity: 0;
       }
 
-      /* BG GRID */
-      .bg-grid {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;
-      }
-      .bg-grid::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-        background-size: 60px 60px;
-        animation: gridScroll 20s linear infinite;
-        mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-        -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-      }
-      @keyframes gridScroll {
-        from { transform: translate(0, 0); }
-        to   { transform: translate(60px, 60px); }
-      }
-
-      /* BG GLOW ORBS */
+      /* BG */
       .bg-glow {
         position: fixed;
         inset: 0;
@@ -200,9 +175,12 @@
         right: -10%;
         width: 700px;
         height: 700px;
-        background: radial-gradient(circle, rgba(0,255,136,0.09), transparent 60%);
+        background: radial-gradient(
+          circle,
+          rgba(200, 255, 0, 0.07),
+          transparent 60%
+        );
         filter: blur(60px);
-        animation: orbFloat1 12s ease-in-out infinite alternate;
       }
       .bg-glow::after {
         content: "";
@@ -211,104 +189,12 @@
         left: -15%;
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(120,119,198,0.07), transparent 60%);
+        background: radial-gradient(
+          circle,
+          rgba(120, 119, 198, 0.05),
+          transparent 60%
+        );
         filter: blur(80px);
-        animation: orbFloat2 16s ease-in-out infinite alternate;
-      }
-      @keyframes orbFloat1 {
-        from { transform: translate(0, 0) scale(1); }
-        to   { transform: translate(-40px, 60px) scale(1.15); }
-      }
-      @keyframes orbFloat2 {
-        from { transform: translate(0, 0) scale(1); }
-        to   { transform: translate(60px, -40px) scale(1.2); }
-      }
-
-      /* HERO PARTICLES */
-      .hero-particles {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-      }
-      .hero-particles span {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0;
-        animation: particleFade var(--dur, 6s) var(--delay, 0s) ease-in-out infinite;
-      }
-      @keyframes particleFade {
-        0%   { opacity: 0; transform: translateY(0) scale(0.5); }
-        20%  { opacity: var(--op, 0.6); }
-        80%  { opacity: var(--op, 0.6); }
-        100% { opacity: 0; transform: translateY(-80px) scale(1); }
-      }
-
-      /* HERO SCANNER LINE */
-      .hero-scanner {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-      }
-      .hero-scanner::after {
-        content: "";
-        position: absolute;
-        left: 0; right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(0,255,136,0.4), transparent);
-        animation: scanDown 5s ease-in-out infinite;
-      }
-      @keyframes scanDown {
-        0%   { top: 0%; opacity: 0; }
-        10%  { opacity: 1; }
-        90%  { opacity: 1; }
-        100% { top: 100%; opacity: 0; }
-      }
-
-      /* HERO CORNER ACCENTS */
-      .hero-corner {
-        position: absolute;
-        width: 40px; height: 40px;
-        pointer-events: none;
-        z-index: 3;
-      }
-      .hero-corner::before,
-      .hero-corner::after {
-        content: "";
-        position: absolute;
-        background: var(--accent);
-        border-radius: 2px;
-        opacity: 0.5;
-        animation: cornerPulse 3s ease-in-out infinite;
-      }
-      .hero-corner::before { width: 2px; height: 20px; }
-      .hero-corner::after  { width: 20px; height: 2px; }
-      .hero-corner.tl { top: 20px; left: 20px; }
-      .hero-corner.tl::before { top: 0; left: 0; }
-      .hero-corner.tl::after  { top: 0; left: 0; }
-      .hero-corner.br { bottom: 20px; right: 20px; }
-      .hero-corner.br::before { bottom: 0; right: 0; }
-      .hero-corner.br::after  { bottom: 0; right: 0; }
-      @keyframes cornerPulse {
-        0%, 100% { opacity: 0.3; }
-        50%       { opacity: 0.8; }
-      }
-
-      /* FLOATING ACCENT DOTS in hero */
-      .hero-dot {
-        position: absolute;
-        border-radius: 50%;
-        background: var(--accent);
-        pointer-events: none;
-        z-index: 1;
-        animation: dotFloat var(--dur, 8s) var(--delay, 0s) ease-in-out infinite alternate;
-      }
-      @keyframes dotFloat {
-        from { transform: translateY(0) rotate(0deg); opacity: var(--op, 0.4); }
-        to   { transform: translateY(-20px) rotate(180deg); opacity: calc(var(--op, 0.4) * 0.5); }
       }
 
       body::after {
@@ -1847,7 +1733,6 @@
     <div class="cursor-ring"></div>
 
     <!-- BG -->
-    <div class="bg-grid"></div>
     <div class="bg-glow"></div>
 
     <!-- NAV -->
@@ -1871,24 +1756,6 @@
 
     <!-- HERO -->
     <section class="hero" id="hero">
-      <!-- Hero BG animations -->
-      <div class="hero-scanner"></div>
-      <div class="hero-corner tl"></div>
-      <div class="hero-corner br"></div>
-      <div class="hero-particles">
-        <span style="--dur:7s;--delay:0s;--op:0.5;width:4px;height:4px;background:var(--accent);left:10%;top:70%;box-shadow:0 0 6px var(--accent)"></span>
-        <span style="--dur:9s;--delay:1.5s;--op:0.35;width:3px;height:3px;background:var(--accent);left:25%;top:60%;box-shadow:0 0 4px var(--accent)"></span>
-        <span style="--dur:6s;--delay:3s;--op:0.5;width:5px;height:5px;background:var(--accent);left:80%;top:75%;box-shadow:0 0 8px var(--accent)"></span>
-        <span style="--dur:11s;--delay:0.8s;--op:0.3;width:3px;height:3px;background:#7777cc;left:60%;top:80%;box-shadow:0 0 6px #7777cc"></span>
-        <span style="--dur:8s;--delay:2s;--op:0.45;width:4px;height:4px;background:var(--accent);left:45%;top:65%;box-shadow:0 0 6px var(--accent)"></span>
-        <span style="--dur:10s;--delay:4s;--op:0.3;width:2px;height:2px;background:#fff;left:70%;top:55%;"></span>
-        <span style="--dur:7s;--delay:5s;--op:0.4;width:3px;height:3px;background:var(--accent);left:15%;top:40%;box-shadow:0 0 4px var(--accent)"></span>
-        <span style="--dur:12s;--delay:1s;--op:0.25;width:2px;height:2px;background:#fff;left:88%;top:30%;"></span>
-      </div>
-      <div class="hero-dot" style="--dur:7s;--delay:0s;--op:0.25;width:6px;height:6px;top:20%;left:5%;filter:blur(1px)"></div>
-      <div class="hero-dot" style="--dur:9s;--delay:2s;--op:0.15;width:10px;height:10px;top:70%;right:8%;filter:blur(2px)"></div>
-      <div class="hero-dot" style="--dur:11s;--delay:1s;--op:0.2;width:4px;height:4px;top:50%;left:50%;filter:blur(1px)"></div>
-
       <div class="hero-inner">
         <div>
           <div class="hero-badge">
