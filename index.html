@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mohammed Dheyaa — UI/UX Designer</title>
+    <title>Mohammed Dheyaa Portfolio</title>
 
     <!-- Open Graph / Social Media Preview -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Mohammed Dheyaa — UI/UX Designer" />
+    <meta property="og:title" content="Mohammed Dheyaa Portfolio" />
     <meta
       property="og:description"
-      content="UI/UX Designer based in Baghdad — crafting clean, purposeful digital experiences."
+      content="UI/UX and Graphic Designer based in Baghdad — crafting clean, purposeful digital experiences."
     />
     <meta
       property="og:image"
@@ -2847,7 +2847,7 @@
               ><span
                 class="reveal-text"
                 data-en="Mohammed Dheyaa."
-                data-ar="محمد ضياء."
+                data-ar="محمـــد ضيـــاء."
                 >Mohammed Dheyaa.</span
               ></span
             >
@@ -2855,9 +2855,9 @@
               ><span class="reveal-text"
                 ><span
                   class="gradient-text"
-                  data-en="UI/UX Designer."
-                  data-ar="مصمم UI/UX."
-                  >UI/UX Designer.</span
+                  data-en="Al-Mudhafar."
+                  data-ar="المظفـــر."
+                  >Al-Mudhafar</span
                 ></span
               ></span
             >
@@ -4941,8 +4941,7 @@
         if (counter) {
           const spans = counter.querySelectorAll("span");
           // Counter format: <span>01</span> / 05 — the second number is plain text after the last span
-          counter.innerHTML =
-            '<span>' + pad(1) + '</span> / ' + pad(total);
+          counter.innerHTML = "<span>" + pad(1) + "</span> / " + pad(total);
         }
 
         // Collect image URLs for this card (for lightbox)
@@ -4999,8 +4998,12 @@
           startAuto();
         }
 
-        card.addEventListener("mouseenter", () => { isHovering = true; });
-        card.addEventListener("mouseleave", () => { isHovering = false; });
+        card.addEventListener("mouseenter", () => {
+          isHovering = true;
+        });
+        card.addEventListener("mouseleave", () => {
+          isHovering = false;
+        });
 
         prevBtn?.addEventListener("click", (e) => {
           e.preventDefault();
