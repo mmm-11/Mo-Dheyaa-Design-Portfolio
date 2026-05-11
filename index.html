@@ -112,6 +112,13 @@
       html[lang="ar"] .nav-logo {
         direction: ltr;
       }
+      /* Carousel internals must stay LTR — slide positioning uses translateX which depends on left-to-right flow */
+      html[lang="ar"] .visual-social,
+      html[lang="ar"] .social-track,
+      html[lang="ar"] .lightbox-track,
+      html[lang="ar"] .lightbox-img-wrap {
+        direction: ltr;
+      }
 
       /* FLOATING LANG TOGGLE */
       .lang-nav-mobile {
@@ -1278,7 +1285,7 @@
         left: 50%;
         transform: translateX(-50%);
         display: flex;
-        gap: 6px;
+        gap: 5px;
         z-index: 3;
         padding: 6px 10px;
         background: rgba(8, 9, 11, 0.6);
@@ -1286,10 +1293,12 @@
         -webkit-backdrop-filter: blur(12px);
         border-radius: 100px;
         border: 1px solid var(--line-2);
+        max-width: calc(100% - 32px);
       }
       .social-dot {
-        width: 6px;
-        height: 6px;
+        width: 5px;
+        height: 5px;
+        flex: 0 0 auto;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.3);
         transition:
@@ -1298,7 +1307,7 @@
       }
       .social-dot.active {
         background: var(--accent);
-        width: 18px;
+        width: 16px;
         box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
       }
 
@@ -2977,15 +2986,15 @@
             data-en="UI/UX"
             data-ar="UI/UX"
           >
-            UI/UX <span class="count">3</span>
+            UI/UX <span class="count">2</span>
           </button>
           <button
             class="tab-btn"
             data-filter="graphic"
-            data-en="Graphic Design"
-            data-ar="جرافيك"
+            data-en="Logo Design"
+            data-ar="تصاميم شعارات"
           >
-            Graphic Design <span class="count">1</span>
+            Logo Design <span class="count">1</span>
           </button>
           <button
             class="tab-btn"
@@ -2993,7 +3002,7 @@
             data-en="Social Media"
             data-ar="سوشيال ميديا"
           >
-            Social Media <span class="count">3</span>
+            Social Media <span class="count">5</span>
           </button>
         </div>
 
@@ -3184,37 +3193,132 @@
             </div>
           </a>
 
-          <!-- Travel Sign In (small) -->
-          <a
-            href="https://www.figma.com/proto/B9Xzgw4EeCsiJWjBKIJ1wH/Travel-Zone?node-id=2006-81&t=BIKgHJ54g6Bw84IP-1&scaling=min-zoom&content-scaling=fixed&page-id=2006%3A80&starting-point-node-id=2006%3A81"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="work-card span-2"
-            data-cat="uiux"
+          <!-- Logo Designs (medium) -->
+          <div
+            class="work-card span-2 social-card"
+            data-cat="graphic"
+            role="button"
+            tabindex="0"
           >
-            <div class="work-visual visual-travel">
-              <img
-                src="https://i.ibb.co/GQpL7yPk/Sign-in-web.png"
-                alt="Travel Agency"
-              />
+            <div class="work-visual visual-social">
+              <div class="social-track" data-current="0">
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/21R8RTjf/Logo1.png"
+                    alt="Logo 1"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/C5zFTkWT/Logo2.png"
+                    alt="Logo 2"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/0pBmfWY9/Logo3.png"
+                    alt="Logo 3"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/CKXjhMN0/Logo4.png"
+                    alt="Logo 4"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/Zwvd8JB/Logo5.png"
+                    alt="Logo 5"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/R4cwqgyH/Logo6.png"
+                    alt="Logo 6"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/RpPTs2JX/Logo7.png"
+                    alt="Logo 7"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/JRXzJL5G/Logo8.png"
+                    alt="Logo 8"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/rKfDnVGY/Logo9.png"
+                    alt="Logo 9"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/GvQFG27D/Logo10.png"
+                    alt="Logo 10"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <button class="social-arrow prev" aria-label="Previous">‹</button>
+              <button class="social-arrow next" aria-label="Next">›</button>
+              <div class="social-counter"><span class="cur">01</span> / 05</div>
+              <div class="social-dots">
+                <span class="social-dot active"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+              </div>
             </div>
             <div class="work-info">
               <div class="work-info-left">
                 <div
                   class="work-name"
-                  data-en="Travel Agency Sign-in"
-                  data-ar="تسجيل دخول وكالة سفر"
+                  data-en="Logo Designs"
+                  data-ar="تصاميم شعارات "
                 >
-                  Travel Agency Sign-in
+                  Logo Designs
                 </div>
                 <div class="work-tags">
-                  <span class="work-mini-tag accent">Ui/Ux</span>
-                  <span class="work-mini-tag">2024</span>
+                  <span class="work-mini-tag accent">Logo Designs </span>
+                  <span class="work-mini-tag">All</span>
                 </div>
               </div>
-              <div class="work-arrow">→</div>
+              <div class="work-arrow" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </div>
             </div>
-          </a>
+          </div>
 
           <!-- Social Media — Brand Campaign (large) -->
           <div
@@ -3611,6 +3715,37 @@
             </div>
           </div>
 
+          <!-- Travel Sign In (small) -->
+          <a
+            href="https://www.figma.com/proto/B9Xzgw4EeCsiJWjBKIJ1wH/Travel-Zone?node-id=2006-81&t=BIKgHJ54g6Bw84IP-1&scaling=min-zoom&content-scaling=fixed&page-id=2006%3A80&starting-point-node-id=2006%3A81"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="work-card span-2"
+            data-cat="uiux"
+          >
+            <div class="work-visual visual-travel">
+              <img
+                src="https://i.ibb.co/GQpL7yPk/Sign-in-web.png"
+                alt="Travel Agency"
+              />
+            </div>
+            <div class="work-info">
+              <div class="work-info-left">
+                <div
+                  class="work-name"
+                  data-en="Travel Agency Sign-in"
+                  data-ar="تسجيل دخول وكالة سفر"
+                >
+                  Travel Agency Sign-in
+                </div>
+                <div class="work-tags">
+                  <span class="work-mini-tag accent">Ui/Ux</span>
+                  <span class="work-mini-tag">2024</span>
+                </div>
+              </div>
+              <div class="work-arrow">→</div>
+            </div>
+          </a>
           <!-- Social Media — Editorial (medium) -->
           <div
             class="work-card span-2 social-card"
@@ -4783,12 +4918,32 @@
       document.querySelectorAll(".social-card").forEach((card) => {
         const track = card.querySelector(".social-track");
         const slides = card.querySelectorAll(".social-slide");
-        const dots = card.querySelectorAll(".social-dot");
+        const dotsContainer = card.querySelector(".social-dots");
         const prevBtn = card.querySelector(".social-arrow.prev");
         const nextBtn = card.querySelector(".social-arrow.next");
         const counter = card.querySelector(".social-counter");
         const total = slides.length;
         let current = 0;
+
+        // Rebuild dots to match the actual slide count
+        let dots = [];
+        if (dotsContainer) {
+          dotsContainer.innerHTML = "";
+          for (let i = 0; i < total; i++) {
+            const dot = document.createElement("span");
+            dot.className = "social-dot" + (i === 0 ? " active" : "");
+            dotsContainer.appendChild(dot);
+          }
+          dots = dotsContainer.querySelectorAll(".social-dot");
+        }
+
+        // Update counter total (e.g. "01 / 10") to match the slide count
+        if (counter) {
+          const spans = counter.querySelectorAll("span");
+          // Counter format: <span>01</span> / 05 — the second number is plain text after the last span
+          counter.innerHTML =
+            '<span>' + pad(1) + '</span> / ' + pad(total);
+        }
 
         // Collect image URLs for this card (for lightbox)
         const images = Array.from(slides).map(
@@ -4811,15 +4966,53 @@
           update();
         }
 
+        // ====== AUTO-SCROLL: 5.5s per slide ======
+        const AUTO_MS = 5500;
+        let autoTimer = null;
+        let isHovering = false;
+        let isDragging = false;
+
+        function tick() {
+          if (
+            document.hidden ||
+            isHovering ||
+            isDragging ||
+            document.getElementById("lightbox")?.classList.contains("open")
+          ) {
+            return;
+          }
+          go(1);
+        }
+
+        function startAuto() {
+          if (autoTimer || total <= 1) return;
+          autoTimer = setInterval(tick, AUTO_MS);
+        }
+        function stopAuto() {
+          if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+          }
+        }
+        function resetAuto() {
+          stopAuto();
+          startAuto();
+        }
+
+        card.addEventListener("mouseenter", () => { isHovering = true; });
+        card.addEventListener("mouseleave", () => { isHovering = false; });
+
         prevBtn?.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
           go(-1);
+          resetAuto();
         });
         nextBtn?.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
           go(1);
+          resetAuto();
         });
 
         dots.forEach((dot, i) => {
@@ -4828,6 +5021,7 @@
             e.stopPropagation();
             current = i;
             update();
+            resetAuto();
           });
         });
 
@@ -4843,6 +5037,7 @@
             startX = e.touches[0].clientX;
             isDown = true;
             didDrag = false;
+            isDragging = true;
           },
           { passive: true },
         );
@@ -4861,12 +5056,15 @@
             go(dx < 0 ? 1 : -1);
           }
           isDown = false;
+          isDragging = false;
+          resetAuto();
         });
 
         visual.addEventListener("mousedown", (e) => {
           startX = e.clientX;
           isDown = true;
           didDrag = false;
+          isDragging = true;
         });
         visual.addEventListener("mousemove", (e) => {
           if (!isDown) return;
@@ -4879,10 +5077,16 @@
             go(dx < 0 ? 1 : -1);
           }
           isDown = false;
+          isDragging = false;
+          resetAuto();
         });
         visual.addEventListener("mouseleave", () => {
+          if (isDown) isDragging = false;
           isDown = false;
         });
+
+        // Start auto-scroll
+        startAuto();
 
         // CLICK CARD → OPEN LIGHTBOX (unless they were dragging)
         card.addEventListener("click", (e) => {
