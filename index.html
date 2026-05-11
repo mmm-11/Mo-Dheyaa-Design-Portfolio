@@ -88,12 +88,6 @@
         margin-left: 0;
         margin-right: 8px;
       }
-      html[lang="ar"] .exp-arrow {
-        transform: rotate(180deg);
-      }
-      html[lang="ar"] .exp-item:hover .exp-arrow {
-        transform: rotate(180deg) rotate(-45deg);
-      }
       html[lang="ar"] .work-arrow {
         transform: rotate(180deg);
       }
@@ -252,7 +246,7 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        z-index: 9999;
+        z-index: 10001;
         border-radius: 50%;
         will-change: transform;
       }
@@ -526,16 +520,62 @@
         margin-right: 16px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
+        color: var(--fg);
+        text-decoration: none;
+        transition: opacity 0.3s;
       }
-      .nav-logo-dot {
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
-        box-shadow: 0 0 12px var(--accent);
-        animation: pulseDot 2s infinite;
+      .nav-logo:hover {
+        opacity: 0.85;
       }
+
+      .logo-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        color: var(--accent);
+        filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.35));
+        transition:
+          transform 0.5s var(--ease-spring),
+          filter 0.4s;
+      }
+      .nav-logo:hover .logo-mark {
+        transform: rotate(-8deg) scale(1.06);
+        filter: drop-shadow(0 0 14px rgba(0, 255, 136, 0.7));
+      }
+
+      .logo-mark svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .logo-frame {
+        opacity: 0.4;
+        transition:
+          opacity 0.4s,
+          stroke-dasharray 0.6s;
+      }
+      .nav-logo:hover .logo-frame {
+        opacity: 1;
+      }
+      .logo-stroke,
+      .logo-fill {
+        transition: transform 0.4s var(--ease);
+        transform-origin: center;
+      }
+      .nav-logo:hover .logo-d {
+        transform: translateX(0.6px);
+      }
+      .nav-logo:hover .logo-m {
+        transform: translateX(-0.4px);
+      }
+
+      .logo-text {
+        white-space: nowrap;
+      }
+
       @keyframes pulseDot {
         0%,
         100% {
@@ -973,9 +1013,30 @@
         letter-spacing: -0.04em;
         line-height: 1;
         margin-bottom: 8px;
+        display: inline-flex;
+        align-items: baseline;
       }
-      .about-card .num span {
+      .about-card .num .count-num {
+        display: inline-block;
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum";
+      }
+      .about-card .num .num-suffix {
         color: var(--accent);
+      }
+      .about-card .num .count-infinity {
+        color: var(--accent);
+        display: inline-block;
+        opacity: 0;
+        transform: scale(0.3) rotate(-30deg);
+        transition:
+          opacity 0.6s var(--ease-out),
+          transform 0.8s var(--ease-spring);
+      }
+      .about-stats.in .count-infinity {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        transition-delay: 0.5s;
       }
       .about-card .lab {
         font-size: 13px;
@@ -1103,6 +1164,340 @@
         position: relative;
         overflow: hidden;
         min-height: 200px;
+      }
+
+      /* SOCIAL MEDIA CAROUSEL */
+      .visual-social {
+        background: #08090b;
+        position: relative;
+        overflow: hidden;
+      }
+      .social-card {
+        cursor: none;
+      }
+      /* Replace the link-arrow rotation with a soft scale on social cards */
+      .social-card .work-arrow {
+        font-size: 13px;
+      }
+      .social-card:hover .work-arrow {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+        transform: scale(1.08);
+      }
+      .social-track {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        transition: transform 0.6s var(--ease-out);
+        will-change: transform;
+      }
+      .social-slide {
+        flex: 0 0 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        background: #0a0a0a;
+      }
+      .social-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        pointer-events: none;
+      }
+      .social-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          transparent 70%,
+          rgba(8, 9, 11, 0.4)
+        );
+        pointer-events: none;
+      }
+      .social-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(8, 9, 11, 0.7);
+        border: 1px solid var(--line-2);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--fg);
+        font-size: 16px;
+        cursor: none;
+        opacity: 0;
+        transition:
+          opacity 0.3s var(--ease),
+          background 0.3s,
+          border-color 0.3s,
+          transform 0.3s;
+        z-index: 4;
+      }
+      .work-card:hover .social-arrow {
+        opacity: 1;
+      }
+      .social-arrow:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+      }
+      .social-arrow.prev {
+        left: 12px;
+      }
+      .social-arrow.next {
+        right: 12px;
+      }
+      .social-arrow:hover.prev {
+        transform: translateY(-50%) translateX(-2px);
+      }
+      .social-arrow:hover.next {
+        transform: translateY(-50%) translateX(2px);
+      }
+
+      .social-dots {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 3;
+        padding: 6px 10px;
+        background: rgba(8, 9, 11, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 100px;
+        border: 1px solid var(--line-2);
+      }
+      .social-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transition:
+          background 0.3s var(--ease),
+          width 0.3s var(--ease);
+      }
+      .social-dot.active {
+        background: var(--accent);
+        width: 18px;
+        box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+      }
+
+      .social-counter {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 3;
+        padding: 5px 10px;
+        background: rgba(8, 9, 11, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--line-2);
+        border-radius: 100px;
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--fg);
+        letter-spacing: 0.05em;
+      }
+      .social-counter span {
+        color: var(--fg-muted);
+      }
+
+      /* LIGHTBOX */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(8, 9, 11, 0.92);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.4s var(--ease-out),
+          visibility 0.4s;
+        padding: 60px 80px;
+      }
+      .lightbox.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      .lightbox-stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-width: 1100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.92);
+        opacity: 0;
+        transition:
+          transform 0.5s var(--ease-spring),
+          opacity 0.4s var(--ease-out);
+      }
+      .lightbox.open .lightbox-stage {
+        transform: scale(1);
+        opacity: 1;
+      }
+      .lightbox-img-wrap {
+        position: relative;
+        max-width: 100%;
+        max-height: 100%;
+        aspect-ratio: 1 / 1;
+        width: min(85vh, 90vw, 720px);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #0a0a0a;
+        box-shadow:
+          0 30px 80px rgba(0, 0, 0, 0.6),
+          0 0 0 1px var(--line-2);
+      }
+      .lightbox-track {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        transition: transform 0.5s var(--ease-out);
+      }
+      .lightbox-track > div {
+        flex: 0 0 100%;
+        height: 100%;
+      }
+      .lightbox-track img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line-2);
+        color: var(--fg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all 0.3s var(--ease);
+        z-index: 2;
+      }
+      .lightbox-close:hover {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+        transform: rotate(90deg);
+      }
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line-2);
+        color: var(--fg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        font-size: 22px;
+        transition: all 0.3s var(--ease);
+        z-index: 2;
+      }
+      .lightbox-nav:hover {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+      }
+      .lightbox-nav.prev {
+        left: 16px;
+      }
+      .lightbox-nav.next {
+        right: 16px;
+      }
+      .lightbox-nav.prev:hover {
+        transform: translateY(-50%) translateX(-3px);
+      }
+      .lightbox-nav.next:hover {
+        transform: translateY(-50%) translateX(3px);
+      }
+
+      .lightbox-meta {
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        background: rgba(8, 9, 11, 0.7);
+        border: 1px solid var(--line-2);
+        border-radius: 100px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .lightbox-meta-count {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--fg-muted);
+        letter-spacing: 0.05em;
+      }
+      .lightbox-meta-count span {
+        color: var(--accent);
+      }
+
+      @media (max-width: 700px) {
+        .lightbox {
+          padding: 20px;
+        }
+        .lightbox-img-wrap {
+          width: 100%;
+        }
+        .lightbox-close {
+          top: 16px;
+          right: 16px;
+          width: 38px;
+          height: 38px;
+        }
+        .lightbox-nav {
+          width: 42px;
+          height: 42px;
+        }
+        .lightbox-nav.prev {
+          left: 8px;
+        }
+        .lightbox-nav.next {
+          right: 8px;
+        }
       }
 
       /* PROJECT-SPECIFIC VISUALS */
@@ -1616,19 +2011,26 @@
         margin: 0 auto;
       }
       .exp-item {
+        border-bottom: 1px solid var(--line);
+        cursor: none;
+      }
+      .exp-item:last-child {
+        border-bottom: none;
+      }
+      .exp-row {
         display: grid;
         grid-template-columns: 180px 1fr auto;
         gap: 32px;
         align-items: center;
         padding: 28px 0;
-        border-bottom: 1px solid var(--line);
-        transition: all 0.3s var(--ease);
+        transition: padding 0.3s var(--ease);
+        position: relative;
       }
-      .exp-item:hover {
+      .exp-item:hover .exp-row {
         padding-left: 12px;
       }
-      .exp-item:last-child {
-        border-bottom: none;
+      .exp-item.open:hover .exp-row {
+        padding-left: 0;
       }
 
       .exp-period {
@@ -1651,21 +2053,99 @@
         font-weight: 500;
         letter-spacing: -0.02em;
         margin-bottom: 2px;
+        transition: color 0.3s;
       }
       .exp-company {
         font-size: 13px;
         color: var(--fg-muted);
       }
+      .exp-item.open .exp-role {
+        color: var(--accent);
+      }
       .exp-arrow {
         color: var(--fg-dim);
         transition:
           color 0.3s,
-          transform 0.3s;
-        font-size: 18px;
+          transform 0.4s var(--ease);
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--line-2);
+        background: rgba(255, 255, 255, 0.03);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
       .exp-item:hover .exp-arrow {
         color: var(--accent);
-        transform: rotate(-45deg);
+        border-color: rgba(200, 255, 0, 0.3);
+        background: rgba(200, 255, 0, 0.06);
+      }
+      .exp-item.open .exp-arrow {
+        transform: rotate(180deg);
+        color: var(--accent);
+        border-color: rgba(200, 255, 0, 0.3);
+        background: rgba(200, 255, 0, 0.1);
+      }
+
+      .exp-details {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.5s var(--ease-out);
+      }
+      .exp-item.open .exp-details {
+        grid-template-rows: 1fr;
+      }
+      .exp-details-inner {
+        overflow: hidden;
+        min-height: 0;
+      }
+      .exp-details-content {
+        display: grid;
+        grid-template-columns: 180px 1fr auto;
+        gap: 32px;
+        padding: 0 0 32px;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition:
+          opacity 0.4s var(--ease-out) 0.1s,
+          transform 0.4s var(--ease-out) 0.1s;
+      }
+      .exp-item.open .exp-details-content {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .exp-details-content > .exp-spacer {
+        /* empty left column to align with grid */
+      }
+      .exp-bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 620px;
+      }
+      .exp-bullets li {
+        position: relative;
+        padding-left: 18px;
+        font-size: 14px;
+        line-height: 1.65;
+        color: var(--fg-muted);
+      }
+      .exp-bullets li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 9px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0.5;
       }
 
       /* SKILLS */
@@ -1865,15 +2345,11 @@
         font-weight: 500;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
       }
-      .footer-brand::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
-        box-shadow: 0 0 12px var(--accent);
+      .footer-brand .logo-mark {
+        width: 26px;
+        height: 26px;
       }
       .footer-socials {
         display: flex;
@@ -1920,6 +2396,14 @@
         .nav-logo {
           margin-right: 8px;
           font-size: 12px;
+          gap: 0;
+        }
+        .nav-logo .logo-text {
+          display: none;
+        }
+        .logo-mark {
+          width: 26px;
+          height: 26px;
         }
         .nav-links {
           display: none;
@@ -2011,12 +2495,24 @@
           font-size: 12px;
         }
 
-        .exp-item {
-          grid-template-columns: 1fr;
-          gap: 8px;
+        .exp-row {
+          grid-template-columns: 1fr auto;
+          gap: 8px 16px;
           padding: 24px 0;
         }
-        .exp-arrow {
+        .exp-row > .exp-period {
+          grid-column: 1 / -1;
+          order: -1;
+        }
+        .exp-details-content {
+          grid-template-columns: 1fr;
+          gap: 8px;
+          padding: 0 0 24px;
+        }
+        .exp-details-content > .exp-spacer {
+          display: none;
+        }
+        .exp-details-content > .exp-arrow-spacer {
           display: none;
         }
 
@@ -2100,12 +2596,44 @@
 
     <!-- NAV -->
     <nav>
-      <div class="nav-logo">
-        <span class="nav-logo-dot"></span>
-        <span data-en="Mohammed.Dheyaa" data-ar="محمد.ضياء"
-          >Mohammed.Dheyaa</span
+      <a href="#hero" class="nav-logo" aria-label="Mohammed Dheyaa — Home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <!-- Rounded square frame -->
+            <rect
+              x="1"
+              y="1"
+              width="30"
+              height="30"
+              rx="8"
+              ry="8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              class="logo-frame"
+            />
+            <!-- M (left) -->
+            <path
+              d="M 7 23 L 7 9 L 12 16 L 17 9 L 17 23"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="logo-stroke logo-m"
+            />
+            <!-- D (right) -->
+            <path
+              d="M 19 9 L 19 23 L 22 23 Q 26 23 26 16 Q 26 9 22 9 Z"
+              fill="currentColor"
+              class="logo-fill logo-d"
+            />
+          </svg>
+        </span>
+        <span class="logo-text" data-en="Mohammed Dheyaa" data-ar="محمد ضياء"
+          >Mohammed Dheyaa</span
         >
-      </div>
+      </a>
       <ul class="nav-links">
         <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
         <li><a href="#works" data-en="Works" data-ar="أعمالي">Works</a></li>
@@ -2377,19 +2905,27 @@
 
         <div class="about-stats reveal-stagger">
           <div class="about-card">
-            <div class="num">07<span>+</span></div>
+            <div class="num">
+              <span class="count-num" data-count="7" data-pad="2">07</span
+              ><span class="num-suffix">+</span>
+            </div>
             <div class="lab" data-en="Years" data-ar="سنة">Years</div>
           </div>
           <div class="about-card">
-            <div class="num">50<span>+</span></div>
+            <div class="num">
+              <span class="count-num" data-count="50">50</span
+              ><span class="num-suffix">+</span>
+            </div>
             <div class="lab" data-en="Projects" data-ar="مشروع">Projects</div>
           </div>
           <div class="about-card">
-            <div class="num">04</div>
+            <div class="num">
+              <span class="count-num" data-count="4" data-pad="2">04</span>
+            </div>
             <div class="lab" data-en="Companies" data-ar="شركة">Companies</div>
           </div>
           <div class="about-card">
-            <div class="num">∞</div>
+            <div class="num"><span class="count-infinity">∞</span></div>
             <div class="lab" data-en="Frames" data-ar="إطار">Frames</div>
           </div>
         </div>
@@ -2416,7 +2952,7 @@
             data-en="All"
             data-ar="الكل"
           >
-            All <span class="count">07</span>
+            All <span class="count">10</span>
           </button>
           <button
             class="tab-btn"
@@ -2442,6 +2978,14 @@
           >
             Graphic Design <span class="count">1</span>
           </button>
+          <button
+            class="tab-btn"
+            data-filter="social"
+            data-en="Social Media"
+            data-ar="سوشيال ميديا"
+          >
+            Social Media <span class="count">3</span>
+          </button>
         </div>
 
         <div class="works-grid" id="works-grid">
@@ -2450,7 +2994,7 @@
             href="https://mmm-11.github.io/Flame/"
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="website"
           >
             <div class="work-visual visual-flame">
@@ -2482,7 +3026,7 @@
             href="https://karrar14546-code.github.io/index.html/"
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="website"
           >
             <div class="work-visual visual-karrar">
@@ -2516,7 +3060,7 @@
             href="https://www.figma.com/proto/Wi60lV2RLJStgpR21Jxb9f/Dr-Cube--Copy-?node-id=316-1141&t=IvN9ccjw7ywGrUgt-0&scaling=min-zoom&content-scaling=fixed&page-id=170%3A18415"
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="Ui/Ux"
           >
             <div class="work-visual visual-cube">
@@ -2547,7 +3091,7 @@
             href="https://www.ameena.app"
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="website"
           >
             <div class="work-visual visual-ameena">
@@ -2576,7 +3120,7 @@
 "
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="design"
           >
             <div class="work-visual visual-hajar">
@@ -2607,7 +3151,7 @@
             href="https://www.figma.com/proto/VazFDncGusFFSQFzLPh8AS/projects?node-id=1-4693&starting-point-node-id=1%3A4693&t=Q9MMwCwWQReQQWpE-1"
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="uiux"
           >
             <div class="work-visual visual-food">
@@ -2636,7 +3180,7 @@
             href="https://www.figma.com/proto/B9Xzgw4EeCsiJWjBKIJ1wH/Travel-Zone?node-id=2006-81&t=BIKgHJ54g6Bw84IP-1&scaling=min-zoom&content-scaling=fixed&page-id=2006%3A80&starting-point-node-id=2006%3A81"
             target="_blank"
             rel="noopener noreferrer"
-            class="work-card span-3"
+            class="work-card span-2"
             data-cat="uiux"
           >
             <div class="work-visual visual-travel">
@@ -2662,6 +3206,616 @@
               <div class="work-arrow">→</div>
             </div>
           </a>
+
+          <!-- Social Media — Brand Campaign (large) -->
+          <div
+            class="work-card span-2 social-card"
+            data-cat="social"
+            role="button"
+            tabindex="0"
+          >
+            <div class="work-visual visual-social">
+              <div class="social-track" data-current="0">
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/R4BY3ZPh/IMG-4401.png"
+                    alt="Social design 1"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/sdkF7vpW/3-10.png"
+                    alt="Social design 2"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/xt6H9Y3D/6-1.png"
+                    alt="Social design 3"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/5hmBktfQ/7-1.png"
+                    alt="Social design 4"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/xyvXnPp/2-10.png"
+                    alt="Social design 5"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/mgLSjJw/9-1.png"
+                    alt="Social design 6"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/pjFYQ9Bc/5-9.png"
+                    alt="Social design 7"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/jv1zktc0/10-1.png"
+                    alt="Social design 8"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/QFCFQhLW/11-1.png"
+                    alt="Social design 9"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/PsM6rXm4/8-1.png"
+                    alt="Social design 10"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/93WZKNGV/12-1.png"
+                    alt="Social design 11"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <button class="social-arrow prev" aria-label="Previous">‹</button>
+              <button class="social-arrow next" aria-label="Next">›</button>
+              <div class="social-counter"><span id="c1-cur">01</span> / 04</div>
+              <div class="social-dots">
+                <span class="social-dot active"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+              </div>
+            </div>
+            <div class="work-info">
+              <div class="work-info-left">
+                <div
+                  class="work-name"
+                  data-en="Brand Campaign Series"
+                  data-ar="حملة بصرية للعلامة"
+                >
+                  Brand Campaign Series
+                </div>
+                <div class="work-tags">
+                  <span class="work-mini-tag accent">Social Media</span>
+                  <span class="work-mini-tag">2024</span>
+                </div>
+              </div>
+              <div class="work-arrow" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media — Product Launches (medium) -->
+          <div
+            class="work-card span-2 social-card"
+            data-cat="social"
+            role="button"
+            tabindex="0"
+          >
+            <div class="work-visual visual-social">
+              <div class="social-track" data-current="0">
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/GQchPRND/19-1.png"
+                    alt="Product launch 1"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/n4Y7MR6/13-1.png"
+                    alt="Product launch 2"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/DJ2C8vn/16-1-1.png"
+                    alt="Product launch 3"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/8gXNPS70/53-1.png"
+                    alt="Product launch 4"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/RGxPXhKk/23-1-1.png"
+                    alt="Product launch 5"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/HDF7RrPV/20-1.png"
+                    alt="Product launch 6"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/wNWkdZ7w/52-1.png"
+                    alt="Product launch 7"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/prP0dXSB/17-1-1.png"
+                    alt="Product launch 8"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/rG6wnn60/22-1-1.png"
+                    alt="Product launch 9"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/Cp9jRkn3/21-1-1.png"
+                    alt="Product launch 10"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/pBDFhFfW/26-1.png"
+                    alt="Product launch 11"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <button class="social-arrow prev" aria-label="Previous">‹</button>
+              <button class="social-arrow next" aria-label="Next">›</button>
+              <div class="social-counter"><span class="cur">01</span> / 03</div>
+              <div class="social-dots">
+                <span class="social-dot active"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+              </div>
+            </div>
+            <div class="work-info">
+              <div class="work-info-left">
+                <div
+                  class="work-name"
+                  data-en="Product Launch Posts"
+                  data-ar="منشورات إطلاق المنتجات"
+                >
+                  Product Launch Posts
+                </div>
+                <div class="work-tags">
+                  <span class="work-mini-tag accent">Social Media</span>
+                  <span class="work-mini-tag">2024</span>
+                </div>
+              </div>
+              <div class="work-arrow" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media — Editorial (medium) -->
+          <div
+            class="work-card span-2 social-card"
+            data-cat="social"
+            role="button"
+            tabindex="0"
+          >
+            <div class="work-visual visual-social">
+              <div class="social-track" data-current="0">
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/qY9dP10H/35-1.png"
+                    alt="Editorial 1"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/5hKnrP3d/33-1.png"
+                    alt="Editorial 2"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/7tqrJ5dN/37-1.png"
+                    alt="Editorial 3"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/j9ffgxFp/29-1.png"
+                    alt="Editorial 4"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/9k7jRtKQ/30-1.png"
+                    alt="Editorial 5"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/j9ffgxFp/29-1.png"
+                    alt="Editorial 6"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/vxW5Qq4Q/IMG-4400-1.png"
+                    alt="Editorial 7"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/jv8FhHd6/32-1.png"
+                    alt="Editorial 8"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/R4VdPYj4/34-1.png"
+                    alt="Editorial 9"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/H5QkXbD/31-1.png"
+                    alt="Editorial10"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/3502y4RG/57-1.png"
+                    alt="Editorial10"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <button class="social-arrow prev" aria-label="Previous">‹</button>
+              <button class="social-arrow next" aria-label="Next">›</button>
+              <div class="social-counter"><span class="cur">01</span> / 05</div>
+              <div class="social-dots">
+                <span class="social-dot active"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+              </div>
+            </div>
+            <div class="work-info">
+              <div class="work-info-left">
+                <div
+                  class="work-name"
+                  data-en="Editorial & Story Designs"
+                  data-ar="تصاميم القصص والمحتوى"
+                >
+                  Editorial & Story Designs
+                </div>
+                <div class="work-tags">
+                  <span class="work-mini-tag accent">Social Media</span>
+                  <span class="work-mini-tag">2023</span>
+                </div>
+              </div>
+              <div class="work-arrow" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media — Editorial (medium) -->
+          <div
+            class="work-card span-2 social-card"
+            data-cat="social"
+            role="button"
+            tabindex="0"
+          >
+            <div class="work-visual visual-social">
+              <div class="social-track" data-current="0">
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/p6X5zbd0/420168153-122135242040132641-6107969001290557121-n.jpg"
+                    alt="Traffic 1"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/vxt1wQ0W/474576593-122185540352132641-3692392160936764052-n.jpg"
+                    alt="Traffic 2"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/mnkGhNt/474441967-122185540520132641-1847444334125360503-n.jpg"
+                    alt="Traffic 3"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/Kp5YG115/474578150-122185540130132641-3467240505099889406-n.jpg"
+                    alt="Traffic 4"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/RGHfFWhv/619226753-17940996078104787-8978050107331614757-n.jpg"
+                    alt="Traffic 5"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/Hf6Q37kM/474741715-122185540304132641-8490903583080109367-n.jpg"
+                    alt="Traffic 6"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <button class="social-arrow prev" aria-label="Previous">‹</button>
+              <button class="social-arrow next" aria-label="Next">›</button>
+              <div class="social-counter"><span class="cur">01</span> / 05</div>
+              <div class="social-dots">
+                <span class="social-dot active"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+              </div>
+            </div>
+            <div class="work-info">
+              <div class="work-info-left">
+                <div
+                  class="work-name"
+                  data-en="Editorial & Story Designs"
+                  data-ar="تصاميم القصص والمحتوى"
+                >
+                  Editorial & Story Designs
+                </div>
+                <div class="work-tags">
+                  <span class="work-mini-tag accent">Social Media</span>
+                  <span class="work-mini-tag">2023</span>
+                </div>
+              </div>
+              <div class="work-arrow" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media — Editorial (medium) -->
+          <div
+            class="work-card span-2 social-card"
+            data-cat="social"
+            role="button"
+            tabindex="0"
+          >
+            <div class="work-visual visual-social">
+              <div class="social-track" data-current="0">
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/Rp9CkTyL/post-1-cover-2.png"
+                    alt="Ttech 1"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/5hrjSk7C/post-2-cover-1.png"
+                    alt="Ttech 2"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/XkxwbZzs/post-2-cover-2.png"
+                    alt="Ttech 3"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/wFbg2cVG/post-3-cover-1.png"
+                    alt="Ttech 4"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/20DJkGbR/post-3-cover-2.png"
+                    alt="Ttech 5"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/ZRk0RLMJ/473670651-122184562460132641-340021203963666461-n.jpg"
+                    alt="Ttech 6"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/Myy85Rdj/473670702-122184562400132641-7171525654800269130-n.jpg"
+                    alt="Ttech 7"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="social-slide">
+                  <img
+                    src="https://i.ibb.co/WvyKwRQp/473579153-122184562430132641-4764657136057559728-n.jpg"
+                    alt="Ttech 8"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <button class="social-arrow prev" aria-label="Previous">‹</button>
+              <button class="social-arrow next" aria-label="Next">›</button>
+              <div class="social-counter"><span class="cur">01</span> / 05</div>
+              <div class="social-dots">
+                <span class="social-dot active"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+                <span class="social-dot"></span>
+              </div>
+            </div>
+            <div class="work-info">
+              <div class="work-info-left">
+                <div
+                  class="work-name"
+                  data-en="Editorial & Story Designs"
+                  data-ar="تصاميم القصص والمحتوى"
+                >
+                  Editorial & Story Designs
+                </div>
+                <div class="work-tags">
+                  <span class="work-mini-tag accent">Social Media</span>
+                  <span class="work-mini-tag">2023</span>
+                </div>
+              </div>
+              <div class="work-arrow" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -2680,90 +3834,354 @@
         </div>
 
         <div class="exp-list reveal-stagger">
-          <div class="exp-item">
-            <div class="exp-period">
-              2024 — Now
-              <span class="now" data-en="Current" data-ar="حالياً"
-                >Current</span
-              >
-            </div>
-            <div>
-              <div
-                class="exp-role"
-                data-en="Product Specialist"
-                data-ar="متخصص منتج"
-              >
-                Product Specialist
+          <div class="exp-item" data-expandable>
+            <div class="exp-row">
+              <div class="exp-period">Oct 2024 — Apr 2026</div>
+              <div>
+                <div
+                  class="exp-role"
+                  data-en="Product Specialist"
+                  data-ar="متخصص منتج"
+                >
+                  Product Specialist
+                </div>
+                <div
+                  class="exp-company"
+                  data-en="Abwaab Educational Platform"
+                  data-ar="منصة أبواب التعليمية"
+                >
+                  Abwaab Educational Platform
+                </div>
               </div>
-              <div
-                class="exp-company"
-                data-en="Abwaab Educational Platform"
-                data-ar="منصة أبواب التعليمية"
-              >
-                Abwaab Educational Platform
+              <div class="exp-arrow" aria-hidden="true">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
               </div>
             </div>
-            <div class="exp-arrow">→</div>
+            <div class="exp-details">
+              <div class="exp-details-inner">
+                <div class="exp-details-content">
+                  <div class="exp-spacer"></div>
+                  <ul class="exp-bullets">
+                    <li
+                      data-en="Manage the Plans Manager system: create and adjust product plans, packages, pricing, and activation keys based on cross-departmental requests."
+                      data-ar="إدارة نظام Plans Manager: إنشاء وتعديل الباقات والأسعار ومفاتيح التفعيل بناءً على طلبات الأقسام المختلفة."
+                    >
+                      Manage the Plans Manager system: create and adjust product
+                      plans, packages, pricing, and activation keys based on
+                      cross-departmental requests.
+                    </li>
+                    <li
+                      data-en="Lead product support for the Iraq team — the main point of contact between Iraq operations and the central product and tech teams."
+                      data-ar="قيادة دعم المنتج لفريق العراق — حلقة الوصل الرئيسية بين العمليات في العراق وفرق المنتج والتقنية المركزية."
+                    >
+                      Lead product support for the Iraq team — the main point of
+                      contact between Iraq operations and the central product
+                      and tech teams.
+                    </li>
+                    <li
+                      data-en="Oversee ERP product development: collaborate with the design lead on UI/UX, define feature flows, and gather local requirements aligned with central priorities."
+                      data-ar="الإشراف على تطوير منتج ERP: التعاون مع مسؤول التصميم على UI/UX وتحديد تدفقات الميزات وجمع المتطلبات المحلية بما يتوافق مع الأولويات المركزية."
+                    >
+                      Oversee ERP product development: collaborate with the
+                      design lead on UI/UX, define feature flows, and gather
+                      local requirements aligned with central priorities.
+                    </li>
+                    <li
+                      data-en="Drive innovation by identifying and proposing local product solutions, ensuring alignment with company-wide product and tech strategies."
+                      data-ar="دفع الابتكار من خلال تحديد واقتراح حلول منتج محلية بما يتماشى مع استراتيجيات المنتج والتقنية على مستوى الشركة."
+                    >
+                      Drive innovation by identifying and proposing local
+                      product solutions, ensuring alignment with company-wide
+                      product and tech strategies.
+                    </li>
+                    <li
+                      data-en="Track and communicate bugs and system issues across all tech products to central tech/product teams for resolution."
+                      data-ar="تتبع الأخطاء ومشاكل النظام عبر كل المنتجات التقنية وإيصالها إلى الفرق المركزية لحلها."
+                    >
+                      Track and communicate bugs and system issues across all
+                      tech products to central tech/product teams for
+                      resolution.
+                    </li>
+                    <li
+                      data-en="Lead onboarding and training for all Iraq teams on new product features, processes, and systems."
+                      data-ar="قيادة التدريب والتعريف بالميزات والعمليات والأنظمة الجديدة لجميع الفرق في العراق."
+                    >
+                      Lead onboarding and training for all Iraq teams on new
+                      product features, processes, and systems.
+                    </li>
+                    <li
+                      data-en="Monitor and report copyright violations by tracking leaked content channels and submitting takedowns through the cybersecurity partner."
+                      data-ar="رصد انتهاكات حقوق الملكية الفكرية من خلال تتبع قنوات تسريب المحتوى وتقديم طلبات الإزالة عبر الشريك الأمني."
+                    >
+                      Monitor and report copyright violations by tracking leaked
+                      content channels and submitting takedowns through the
+                      cybersecurity partner.
+                    </li>
+                  </ul>
+                  <div class="exp-arrow-spacer"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="exp-item">
-            <div class="exp-period">2023 — 2024</div>
-            <div>
-              <div
-                class="exp-role"
-                data-en="Business Analyst · UI/UX Designer"
-                data-ar="محلل أعمال · مصمم UI/UX"
-              >
-                Business Analyst · UI/UX Designer
+          <div class="exp-item" data-expandable>
+            <div class="exp-row">
+              <div class="exp-period">Apr 2023 — Oct 2024</div>
+              <div>
+                <div
+                  class="exp-role"
+                  data-en="Business Analyst · UI/UX Designer"
+                  data-ar="محلل أعمال · مصمم UI/UX"
+                >
+                  Business Analyst · UI/UX Designer
+                </div>
+                <div class="exp-company">Earthlink Telecommunication</div>
               </div>
-              <div class="exp-company">Earthlink Telecommunication</div>
+              <div class="exp-arrow" aria-hidden="true">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
             </div>
-            <div class="exp-arrow">→</div>
+            <div class="exp-details">
+              <div class="exp-details-inner">
+                <div class="exp-details-content">
+                  <div class="exp-spacer"></div>
+                  <ul class="exp-bullets">
+                    <li
+                      data-en="Participated in design and planning meetings to ensure business requirements were accurately reflected in product designs and feature roadmaps."
+                      data-ar="المشاركة في اجتماعات التصميم والتخطيط لضمان انعكاس متطلبات العمل بدقة في تصاميم المنتج وخرائط الميزات."
+                    >
+                      Participated in design and planning meetings to ensure
+                      business requirements were accurately reflected in product
+                      designs and feature roadmaps.
+                    </li>
+                    <li
+                      data-en="Collaborated closely with cross-functional teams to align solutions with overall business goals and strategic initiatives."
+                      data-ar="التعاون الوثيق مع فرق متعددة التخصصات لمواءمة الحلول مع الأهداف العامة والمبادرات الاستراتيجية."
+                    >
+                      Collaborated closely with cross-functional teams to align
+                      solutions with overall business goals and strategic
+                      initiatives.
+                    </li>
+                    <li
+                      data-en="Contributed to UI/UX design, ensuring user-centric and functional interfaces aligned with user expectations and technical feasibility."
+                      data-ar="المساهمة في تصميم UI/UX لضمان واجهات تتمحور حول المستخدم وعملية تتوافق مع التوقعات والجدوى التقنية."
+                    >
+                      Contributed to UI/UX design, ensuring user-centric and
+                      functional interfaces aligned with user expectations and
+                      technical feasibility.
+                    </li>
+                    <li
+                      data-en="Produced comprehensive business analysis documentation: requirements, user stories, and process flow diagrams."
+                      data-ar="إنتاج وثائق تحليل أعمال شاملة: المتطلبات، قصص المستخدمين، ومخططات تدفق العمليات."
+                    >
+                      Produced comprehensive business analysis documentation:
+                      requirements, user stories, and process flow diagrams.
+                    </li>
+                  </ul>
+                  <div class="exp-arrow-spacer"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="exp-item">
-            <div class="exp-period">2022 — 2023</div>
-            <div>
-              <div
-                class="exp-role"
-                data-en="Solution Sales Account Manager"
-                data-ar="مدير حسابات مبيعات الحلول"
-              >
-                Solution Sales Account Manager
+          <div class="exp-item" data-expandable>
+            <div class="exp-row">
+              <div class="exp-period">Apr 2022 — Apr 2023</div>
+              <div>
+                <div
+                  class="exp-role"
+                  data-en="Solution Sales Account Manager"
+                  data-ar="مدير حسابات مبيعات الحلول"
+                >
+                  Solution Sales Account Manager
+                </div>
+                <div class="exp-company">Earthlink Telecommunication</div>
               </div>
-              <div class="exp-company">Earthlink Telecommunication</div>
+              <div class="exp-arrow" aria-hidden="true">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
             </div>
-            <div class="exp-arrow">→</div>
+            <div class="exp-details">
+              <div class="exp-details-inner">
+                <div class="exp-details-content">
+                  <div class="exp-spacer"></div>
+                  <ul class="exp-bullets">
+                    <li
+                      data-en="Led solution-based sales efforts, delivering tailored technical offers and managing end-to-end sales pipelines across multiple sectors."
+                      data-ar="قيادة جهود المبيعات القائمة على الحلول، وتقديم عروض تقنية مخصصة وإدارة خطوط المبيعات من البداية للنهاية عبر قطاعات متعددة."
+                    >
+                      Led solution-based sales efforts, delivering tailored
+                      technical offers and managing end-to-end sales pipelines
+                      across multiple sectors.
+                    </li>
+                    <li
+                      data-en="Built and maintained strong client relationships through meetings, workshops, and strategic account management."
+                      data-ar="بناء علاقات قوية مع العملاء والحفاظ عليها من خلال الاجتماعات وورش العمل والإدارة الاستراتيجية للحسابات."
+                    >
+                      Built and maintained strong client relationships through
+                      meetings, workshops, and strategic account management.
+                    </li>
+                    <li
+                      data-en="Collaborated on UI/UX design and product demos to present user-focused solutions aligned with client needs."
+                      data-ar="التعاون في تصميم UI/UX وعروض المنتج لتقديم حلول تتمحور حول المستخدم وتلائم احتياجات العميل."
+                    >
+                      Collaborated on UI/UX design and product demos to present
+                      user-focused solutions aligned with client needs.
+                    </li>
+                    <li
+                      data-en="Drove business growth through agile project management, market research, and effective sales strategies."
+                      data-ar="دفع نمو الأعمال من خلال إدارة المشاريع الرشيقة وأبحاث السوق واستراتيجيات المبيعات الفعالة."
+                    >
+                      Drove business growth through agile project management,
+                      market research, and effective sales strategies.
+                    </li>
+                  </ul>
+                  <div class="exp-arrow-spacer"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="exp-item">
-            <div class="exp-period">2021 — 2022</div>
-            <div>
-              <div
-                class="exp-role"
-                data-en="Digital Marketing · Graphic Designer"
-                data-ar="تسويق رقمي · مصمم جرافيك"
-              >
-                Digital Marketing · Graphic Designer
+          <div class="exp-item" data-expandable>
+            <div class="exp-row">
+              <div class="exp-period">Dec 2021 — Apr 2022</div>
+              <div>
+                <div
+                  class="exp-role"
+                  data-en="Digital Marketing · Graphic Designer"
+                  data-ar="تسويق رقمي · مصمم جرافيك"
+                >
+                  Digital Marketing · Graphic Designer
+                </div>
+                <div class="exp-company">Keyston Distribution</div>
               </div>
-              <div class="exp-company">Keyston Distribution</div>
+              <div class="exp-arrow" aria-hidden="true">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
             </div>
-            <div class="exp-arrow">→</div>
+            <div class="exp-details">
+              <div class="exp-details-inner">
+                <div class="exp-details-content">
+                  <div class="exp-spacer"></div>
+                  <ul class="exp-bullets">
+                    <li
+                      data-en="Created and managed engaging social media content and visual assets using Adobe Photoshop and Illustrator."
+                      data-ar="إنشاء وإدارة محتوى وأصول بصرية جذابة لوسائل التواصل الاجتماعي باستخدام Adobe Photoshop و Illustrator."
+                    >
+                      Created and managed engaging social media content and
+                      visual assets using Adobe Photoshop and Illustrator.
+                    </li>
+                    <li
+                      data-en="Contributed to brand management and customer relationship initiatives, aligning marketing efforts with business goals."
+                      data-ar="المساهمة في إدارة العلامة التجارية ومبادرات علاقات العملاء، ومواءمة جهود التسويق مع أهداف العمل."
+                    >
+                      Contributed to brand management and customer relationship
+                      initiatives, aligning marketing efforts with business
+                      goals.
+                    </li>
+                  </ul>
+                  <div class="exp-arrow-spacer"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="exp-item">
-            <div class="exp-period">2021</div>
-            <div>
-              <div
-                class="exp-role"
-                data-en="Front End Developer"
-                data-ar="مطور واجهات أمامية"
-              >
-                Front End Developer
+          <div class="exp-item" data-expandable>
+            <div class="exp-row">
+              <div class="exp-period">Oct 2021 — Dec 2021</div>
+              <div>
+                <div
+                  class="exp-role"
+                  data-en="Front End Developer"
+                  data-ar="مطور واجهات أمامية"
+                >
+                  Front End Developer
+                </div>
+                <div class="exp-company">Capo Co</div>
               </div>
-              <div class="exp-company">Capo Co</div>
+              <div class="exp-arrow" aria-hidden="true">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
             </div>
-            <div class="exp-arrow">→</div>
+            <div class="exp-details">
+              <div class="exp-details-inner">
+                <div class="exp-details-content">
+                  <div class="exp-spacer"></div>
+                  <ul class="exp-bullets">
+                    <li
+                      data-en="Developed responsive and user-friendly frontend interfaces using modern web technologies."
+                      data-ar="تطوير واجهات أمامية متجاوبة وسهلة الاستخدام باستخدام تقنيات الويب الحديثة."
+                    >
+                      Developed responsive and user-friendly frontend interfaces
+                      using modern web technologies.
+                    </li>
+                    <li
+                      data-en="Collaborated with design and development teams to translate UI/UX designs into functional web components."
+                      data-ar="التعاون مع فرق التصميم والتطوير لتحويل تصاميم UI/UX إلى مكونات ويب عملية."
+                    >
+                      Collaborated with design and development teams to
+                      translate UI/UX designs into functional web components.
+                    </li>
+                  </ul>
+                  <div class="exp-arrow-spacer"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2861,13 +4279,13 @@
         <div class="tools-grid reveal-stagger">
           <span class="tool-pill">Figma</span>
           <span class="tool-pill">Framer</span>
-          <span class="tool-pill">HTML / CSS /JS</span>
-          <span class="tool-pill">Wordpress</span>
+          <span class="tool-pill">HTML / CSS / JS</span>
+          <span class="tool-pill">WordPress</span>
           <span class="tool-pill">Photoshop</span>
           <span class="tool-pill">Illustrator</span>
           <span class="tool-pill">Canva</span>
           <span class="tool-pill">Claude</span>
-          <span class="tool-pill">Ai Tools</span>
+          <span class="tool-pill">AI Tools</span>
         </div>
       </div>
     </section>
@@ -2891,6 +4309,25 @@
             <a href="tel:+9647718304120" class="btn btn-secondary">
               <span>+964 771 830 4120</span>
             </a>
+            <a
+              href="https://www.linkedin.com/in/mo-dheyaa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-secondary"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"
+                />
+              </svg>
+              <span>LinkedIn</span>
+            </a>
           </div>
         </div>
       </div>
@@ -2899,12 +4336,45 @@
     <!-- FOOTER -->
     <footer>
       <div class="footer-inner">
-        <div class="footer-brand" data-en="Mohammed Dheyaa" data-ar="محمد ضياء">
-          Mohammed Dheyaa
+        <div class="footer-brand">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <rect
+                x="1"
+                y="1"
+                width="30"
+                height="30"
+                rx="8"
+                ry="8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                class="logo-frame"
+              />
+              <path
+                d="M 7 23 L 7 9 L 12 16 L 17 9 L 17 23"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="logo-stroke logo-m"
+              />
+              <path
+                d="M 19 9 L 19 23 L 22 23 Q 26 23 26 16 Q 26 9 22 9 Z"
+                fill="currentColor"
+                class="logo-fill logo-d"
+              />
+            </svg>
+          </span>
+          <span data-en="Mohammed Dheyaa" data-ar="محمد ضياء"
+            >Mohammed Dheyaa</span
+          >
         </div>
+
         <!--
                 <div class="footer-socials">
-          <a href="#" class="social-pill">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/mo-dheyaa/" target="_blank" rel="noopener noreferrer" class="social-pill">LinkedIn</a>
           <a href="#" class="social-pill">Behance</a>
           <a href="#" class="social-pill">Dribbble</a>
           <a href="#" class="social-pill">Instagram</a>
@@ -2920,6 +4390,46 @@
         </div>
       </div>
     </footer>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+      <div class="lightbox-stage">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <button
+          class="lightbox-nav prev"
+          id="lightbox-prev"
+          aria-label="Previous"
+        >
+          ‹
+        </button>
+        <div class="lightbox-img-wrap">
+          <div class="lightbox-track" id="lightbox-track"></div>
+        </div>
+        <button class="lightbox-nav next" id="lightbox-next" aria-label="Next">
+          ›
+        </button>
+        <div class="lightbox-meta">
+          <span class="lightbox-meta-count"
+            ><span id="lightbox-cur">01</span> /
+            <span id="lightbox-total">01</span></span
+          >
+        </div>
+      </div>
+    </div>
 
     <script>
       // CURSOR
@@ -3081,6 +4591,283 @@
               card.classList.add("hidden");
             }
           });
+        });
+      });
+
+      // COUNT-UP NUMBERS (about stats)
+      const countNums = document.querySelectorAll(".count-num");
+      const countIO = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = parseInt(el.getAttribute("data-count"), 10) || 0;
+            const pad = parseInt(el.getAttribute("data-pad"), 10) || 0;
+            const duration = 1800; // ms
+            const startTime = performance.now();
+
+            // Smooth easeOutExpo
+            const ease = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+            function tick(now) {
+              const elapsed = now - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = ease(progress);
+              const value = Math.round(eased * target);
+              el.textContent = pad
+                ? String(value).padStart(pad, "0")
+                : String(value);
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+
+            // Start from 0
+            el.textContent = pad ? "0".padStart(pad, "0") : "0";
+            requestAnimationFrame(tick);
+            countIO.unobserve(el);
+          });
+        },
+        { threshold: 0.4 },
+      );
+
+      countNums.forEach((el) => countIO.observe(el));
+
+      // EXPANDABLE EXPERIENCE
+      document
+        .querySelectorAll(".exp-item[data-expandable]")
+        .forEach((item) => {
+          // Make item keyboard-accessible
+          item.setAttribute("role", "button");
+          item.setAttribute("tabindex", "0");
+          item.setAttribute("aria-expanded", "false");
+
+          const toggle = (e) => {
+            if (e) e.preventDefault();
+            const opening = !item.classList.contains("open");
+            item.classList.toggle("open");
+            item.setAttribute("aria-expanded", opening ? "true" : "false");
+          };
+
+          item.addEventListener("click", toggle);
+          item.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") toggle(e);
+          });
+        });
+
+      // SOCIAL MEDIA CARDS — inline carousel + lightbox on click
+      const lightbox = document.getElementById("lightbox");
+      const lightboxTrack = document.getElementById("lightbox-track");
+      const lightboxCur = document.getElementById("lightbox-cur");
+      const lightboxTotal = document.getElementById("lightbox-total");
+      const lightboxClose = document.getElementById("lightbox-close");
+      const lightboxPrev = document.getElementById("lightbox-prev");
+      const lightboxNext = document.getElementById("lightbox-next");
+
+      let lbImages = [];
+      let lbIndex = 0;
+
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function lbUpdate() {
+        lightboxTrack.style.transform = `translateX(-${lbIndex * 100}%)`;
+        lightboxCur.textContent = pad(lbIndex + 1);
+      }
+
+      function openLightbox(images, startIndex, title) {
+        lbImages = images;
+        lbIndex = startIndex || 0;
+
+        // Build slides
+        lightboxTrack.innerHTML = "";
+        images.forEach((src) => {
+          const slide = document.createElement("div");
+          const img = document.createElement("img");
+          img.src = src;
+          img.draggable = false;
+          img.alt = "";
+          slide.appendChild(img);
+          lightboxTrack.appendChild(slide);
+        });
+
+        lightboxTotal.textContent = pad(images.length);
+        lbUpdate();
+
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.classList.add("lightbox-open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("lightbox-open");
+        document.body.style.overflow = "";
+      }
+
+      function lbGo(dir) {
+        if (!lbImages.length) return;
+        lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+        lbUpdate();
+      }
+
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightboxPrev.addEventListener("click", () => lbGo(-1));
+      lightboxNext.addEventListener("click", () => lbGo(1));
+
+      // Click backdrop to close
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // Keyboard
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("open")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") lbGo(-1);
+        if (e.key === "ArrowRight") lbGo(1);
+      });
+
+      // Touch swipe inside lightbox
+      let lbStartX = 0;
+      let lbIsDown = false;
+      lightboxTrack.addEventListener(
+        "touchstart",
+        (e) => {
+          lbStartX = e.touches[0].clientX;
+          lbIsDown = true;
+        },
+        { passive: true },
+      );
+      lightboxTrack.addEventListener("touchend", (e) => {
+        if (!lbIsDown) return;
+        const dx = e.changedTouches[0].clientX - lbStartX;
+        if (Math.abs(dx) > 40) lbGo(dx < 0 ? 1 : -1);
+        lbIsDown = false;
+      });
+
+      // Wire each social card
+      document.querySelectorAll(".social-card").forEach((card) => {
+        const track = card.querySelector(".social-track");
+        const slides = card.querySelectorAll(".social-slide");
+        const dots = card.querySelectorAll(".social-dot");
+        const prevBtn = card.querySelector(".social-arrow.prev");
+        const nextBtn = card.querySelector(".social-arrow.next");
+        const counter = card.querySelector(".social-counter");
+        const total = slides.length;
+        let current = 0;
+
+        // Collect image URLs for this card (for lightbox)
+        const images = Array.from(slides).map(
+          (s) => s.querySelector("img").src,
+        );
+        const titleEl = card.querySelector(".work-name");
+        const title = titleEl ? titleEl.textContent.trim() : "";
+
+        function update() {
+          track.style.transform = `translateX(-${current * 100}%)`;
+          dots.forEach((d, i) => d.classList.toggle("active", i === current));
+          if (counter) {
+            const curEl = counter.querySelector("span");
+            if (curEl) curEl.textContent = pad(current + 1);
+          }
+        }
+
+        function go(dir) {
+          current = (current + dir + total) % total;
+          update();
+        }
+
+        prevBtn?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          go(-1);
+        });
+        nextBtn?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          go(1);
+        });
+
+        dots.forEach((dot, i) => {
+          dot.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            current = i;
+            update();
+          });
+        });
+
+        // Touch / mouse swipe on card carousel
+        let startX = 0;
+        let isDown = false;
+        let didDrag = false;
+
+        const visual = card.querySelector(".work-visual");
+        visual.addEventListener(
+          "touchstart",
+          (e) => {
+            startX = e.touches[0].clientX;
+            isDown = true;
+            didDrag = false;
+          },
+          { passive: true },
+        );
+        visual.addEventListener(
+          "touchmove",
+          (e) => {
+            if (!isDown) return;
+            if (Math.abs(e.touches[0].clientX - startX) > 10) didDrag = true;
+          },
+          { passive: true },
+        );
+        visual.addEventListener("touchend", (e) => {
+          if (!isDown) return;
+          const dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 40) {
+            go(dx < 0 ? 1 : -1);
+          }
+          isDown = false;
+        });
+
+        visual.addEventListener("mousedown", (e) => {
+          startX = e.clientX;
+          isDown = true;
+          didDrag = false;
+        });
+        visual.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          if (Math.abs(e.clientX - startX) > 10) didDrag = true;
+        });
+        visual.addEventListener("mouseup", (e) => {
+          if (!isDown) return;
+          const dx = e.clientX - startX;
+          if (Math.abs(dx) > 40) {
+            go(dx < 0 ? 1 : -1);
+          }
+          isDown = false;
+        });
+        visual.addEventListener("mouseleave", () => {
+          isDown = false;
+        });
+
+        // CLICK CARD → OPEN LIGHTBOX (unless they were dragging)
+        card.addEventListener("click", (e) => {
+          // Ignore clicks on internal controls (arrows, dots) — they already stopPropagation
+          if (didDrag) {
+            didDrag = false;
+            return;
+          }
+          openLightbox(images, current, title);
+        });
+
+        // Keyboard accessibility
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openLightbox(images, current, title);
+          }
         });
       });
     </script>
