@@ -1115,12 +1115,10 @@
         border-radius: 20px;
         overflow: hidden;
         transition:
-          opacity 0.5s var(--ease),
-          transform 0.5s var(--ease),
+          opacity 0.35s var(--ease),
+          transform 0.4s var(--ease),
           border-color 0.4s,
-          box-shadow 0.4s,
-          max-height 0.6s var(--ease),
-          margin 0.6s var(--ease);
+          box-shadow 0.4s;
         cursor: none;
         position: relative;
         display: flex;
@@ -1147,16 +1145,27 @@
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       }
 
-      .work-card.hidden {
+      /* Filter states */
+      .work-card.filtering-out {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.92);
         pointer-events: none;
-        max-height: 0;
-        grid-row: span 0;
-        margin: 0;
-        padding: 0;
-        border: none;
-        overflow: hidden;
+      }
+      .work-card.hidden {
+        display: none !important;
+      }
+      .work-card.filtering-in {
+        animation: filterIn 0.5s var(--ease-out) both;
+      }
+      @keyframes filterIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
 
       .work-visual {
@@ -4584,13 +4593,36 @@
           moveTabBg(btn);
 
           const filter = btn.dataset.filter;
+          const FADE_MS = 300;
+
+          // Phase 1: fade out cards that will be removed
           workCards.forEach((card) => {
-            if (filter === "all" || card.dataset.cat === filter) {
-              card.classList.remove("hidden");
-            } else {
-              card.classList.add("hidden");
+            const matches = filter === "all" || card.dataset.cat === filter;
+            card.classList.remove("filtering-in");
+            if (!matches && !card.classList.contains("hidden")) {
+              card.classList.add("filtering-out");
             }
           });
+
+          // Phase 2: after fade-out, apply display:none and fade-in newcomers
+          setTimeout(() => {
+            workCards.forEach((card) => {
+              const matches = filter === "all" || card.dataset.cat === filter;
+              if (matches) {
+                const wasHidden = card.classList.contains("hidden");
+                card.classList.remove("hidden", "filtering-out");
+                if (wasHidden) {
+                  card.classList.remove("filtering-in");
+                  // Force reflow so the animation replays
+                  void card.offsetWidth;
+                  card.classList.add("filtering-in");
+                }
+              } else {
+                card.classList.add("hidden");
+                card.classList.remove("filtering-out");
+              }
+            });
+          }, FADE_MS);
         });
       });
 
