@@ -5112,6 +5112,70 @@
           });
         });
 
+      // CLICK RIPPLE RING
+      function spawnRipple(x, y) {
+        const accentColor = getComputedStyle(document.body).getPropertyValue("--accent").trim();
+
+        // Outer ripple ring
+        const ripple = document.createElement("span");
+        ripple.style.cssText = `
+          position: fixed;
+          left: ${x}px;
+          top: ${y}px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 2px solid ${accentColor};
+          box-shadow: 0 0 8px ${accentColor};
+          pointer-events: none;
+          z-index: 10002;
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.9;
+          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.55s ease;
+        `;
+        document.body.appendChild(ripple);
+
+        // Second smaller trailing ring
+        const ripple2 = document.createElement("span");
+        ripple2.style.cssText = `
+          position: fixed;
+          left: ${x}px;
+          top: ${y}px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 1.5px solid ${accentColor};
+          pointer-events: none;
+          z-index: 10002;
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.5;
+          transition: transform 0.75s cubic-bezier(0.16,1,0.3,1), opacity 0.75s ease;
+        `;
+        document.body.appendChild(ripple2);
+
+        requestAnimationFrame(() => {
+          ripple.style.transform = "translate(-50%, -50%) scale(7)";
+          ripple.style.opacity = "0";
+          ripple2.style.transform = "translate(-50%, -50%) scale(11)";
+          ripple2.style.opacity = "0";
+        });
+
+        setTimeout(() => ripple.remove(), 580);
+        setTimeout(() => ripple2.remove(), 780);
+
+        // Flash the cursor dot
+        dot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(2)`;
+        dot.style.opacity = "0.5";
+        setTimeout(() => {
+          dot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(1)`;
+          dot.style.opacity = "1";
+        }, 200);
+      }
+
+      window.addEventListener("mousedown", (e) => {
+        spawnRipple(e.clientX, e.clientY);
+      });
+
       // SCROLL REVEALS
       const io = new IntersectionObserver(
         (entries) => {
